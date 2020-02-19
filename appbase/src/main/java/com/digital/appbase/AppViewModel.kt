@@ -64,11 +64,11 @@ open class ViewModelFactory(private val application: Application) :
 
 
 	override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-		return if(application is AppApp)
+		return if(application is AppAppBase)
 			application.createVM(modelClass) as T
 		else
 			throw IllegalArgumentException("---- Error ---- " +
-				"Your Application class must be extent from `AppApp` class. " +
+				"Your Application class must be extent from `AppAppBase` class. " +
 				"-----  note: check hot use custom Application class in android. ---")
 	}
 }

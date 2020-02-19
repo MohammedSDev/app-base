@@ -8,7 +8,7 @@ import com.digital.appktx.changeAppLocale
 /**
  * App Application class
  * */
-abstract class AppApp : Application() {
+abstract class AppAppBase : Application() {
 
 
 	override fun attachBaseContext(base: Context?) {
