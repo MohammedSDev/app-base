@@ -19,15 +19,15 @@ import com.digital.appktx.getCurrentLanguageCode
  * dot's use this class as direct parent of your activities.
  * instead use it as parent of your base activity class.
  */
-abstract class AppActivity : AppCompatActivity() {
+abstract class AppBaseActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		AppSharedContext.context = application
+		AppBaseSharedContext.context = application
 		//mack content behind status bar
 		//window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 		changeDecorateViewLayoutDirection()
-		ShareLD.appLocaleLD.observe(this, androidx.lifecycle.Observer {
+		AppBaseShareLD.appLocaleLD.observe(this, androidx.lifecycle.Observer {
 			handleLanguageChangeEvent()
 		})
 

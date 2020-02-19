@@ -12,14 +12,14 @@ import androidx.core.content.ContextCompat
 /**
  * Created by Gg on 2/9/2019.
  */
-abstract class AppFragment : Fragment() {
+abstract class AppBaseFragment : Fragment() {
 
 	var fragView: View? = null
 	var isNewViewCreated = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		AppSharedContext.context = activity?.application
+		AppBaseSharedContext.context = activity?.application
 
 		onCreate()
 		configObserves()

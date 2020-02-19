@@ -4,7 +4,7 @@ import android.app.Application
 import java.lang.ref.WeakReference
 
 
-object AppSharedContext {
+object AppBaseSharedContext {
 
 	private var context_: WeakReference<Application?> = WeakReference(null)
 

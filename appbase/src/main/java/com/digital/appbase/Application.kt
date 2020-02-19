@@ -24,7 +24,7 @@ abstract class AppApp : Application() {
 
 	override fun onCreate() {
 		super.onCreate()
-		AppSharedContext.context = this
+		AppBaseSharedContext.context = this
 	}
 
 	/**

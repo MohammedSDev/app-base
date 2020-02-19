@@ -2,7 +2,7 @@ package com.digital.appbase
 
 import androidx.lifecycle.LiveData
 
-class ShareLD {
+class AppBaseShareLD {
 
 	companion object{
 		@JvmStatic

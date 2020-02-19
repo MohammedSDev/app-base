@@ -5,14 +5,14 @@ import android.os.Handler
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 
-abstract class AppVM(application: Application) : AndroidViewModel(application) {
+abstract class AppBaseVM(application: Application) : AndroidViewModel(application) {
 
 
 	//	protected open val mComb = AppCompositeDisposable()
 	val mDelayCallbackLD: LiveData<Any?> = MutableLiveData()
 
 	init {
-		AppSharedContext.context = application
+		AppBaseSharedContext.context = application
 	}
 
 	fun requestCallbackDelay(delay: Long,tag:Any? = null) {

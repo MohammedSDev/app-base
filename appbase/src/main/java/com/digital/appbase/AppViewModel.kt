@@ -10,20 +10,20 @@ import java.lang.IllegalArgumentException
 import kotlin.reflect.KProperty
 
 
-inline fun <reified T : AppVM> Fragment.createVM(shareVM: Boolean = false): FragmentVM<T> {
+inline fun <reified T : AppBaseVM> Fragment.createVM(shareVM: Boolean = false): FragmentVM<T> {
 	return FragmentVM<T>(T::class.java, shareVM)
 }
 
-inline fun <reified T : AppVM> Fragment.createParentVM(): FragmentVM<T> {
+inline fun <reified T : AppBaseVM> Fragment.createParentVM(): FragmentVM<T> {
 
 	return FragmentVM(T::class.java, false, parentFrag = true)
 }
 
-inline fun <reified T : AppVM> AppActivity.createVM(): ActivityVM<T> {
+inline fun <reified T : AppBaseVM> AppBaseActivity.createVM(): ActivityVM<T> {
 	return ActivityVM<T>(T::class.java)
 }
 
-class FragmentVM<T : AppVM>(
+class FragmentVM<T : AppBaseVM>(
 	val c: Class<T>,
 	val shareVM: Boolean = false,
 	val parentFrag: Boolean = false
@@ -47,7 +47,7 @@ class FragmentVM<T : AppVM>(
 	}
 }
 
-class ActivityVM<T : AppVM>(val c: Class<T>) {
+class ActivityVM<T : AppBaseVM>(val c: Class<T>) {
 	operator fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): T {
 		return ViewModelProviders.of(
 			thisRef,
