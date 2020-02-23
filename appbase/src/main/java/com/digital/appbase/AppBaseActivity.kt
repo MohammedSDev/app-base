@@ -2,6 +2,7 @@ package com.digital.appbase
 
 import android.annotation.TargetApi
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.digital.appktx.changeAppLocale
 import com.digital.appktx.getCurrentLanguageCode
 
@@ -123,6 +125,24 @@ abstract class AppBaseActivity : AppCompatActivity() {
 		}
 	}
 
+	fun startActivity(target: Class<*>, bundle: Bundle, options: Bundle? = null) {
+		startActivity(Intent(this, target).also { it.putExtras(bundle) }, options)
+	}
+
+	fun startFragment(
+		containerId: Int,
+		fragment: Fragment,
+		tag: String? = null,
+		bundle: Bundle,
+		addToBackStack: Boolean = false
+	) {
+		supportFragmentManager.beginTransaction()
+			.replace(containerId, fragment.also { it.arguments = bundle }, tag).also {
+				if (addToBackStack)
+					it.addToBackStack(fragment.toString())
+			}
+			.commit()
+	}
 
 	fun getColorComp(colorRes: Int) = ContextCompat.getColor(this, colorRes)
 	fun getDrawableComp(drawableRes: Int) = ContextCompat.getDrawable(this, drawableRes)

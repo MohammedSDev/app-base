@@ -1,5 +1,6 @@
 package com.digital.appbase
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -67,6 +68,25 @@ abstract class AppBaseFragment : Fragment() {
 			arguments = value
 		}
 
+
+	fun startActivity(target:Class<*>,bundle: Bundle,options:Bundle? = null){
+		startActivity(Intent(context,target).also { it.putExtras(bundle) },options)
+	}
+
+	fun startFragment(
+		containerId: Int,
+		fragment: Fragment,
+		tag: String? = null,
+		bundle: Bundle,
+		addToBackStack: Boolean = false
+	) {
+		childFragmentManager.beginTransaction()
+			.replace(containerId, fragment.also { it.arguments = bundle }, tag).also {
+				if (addToBackStack)
+					it.addToBackStack(fragment.toString())
+			}
+			.commit()
+	}
 
 	fun getColorComp(colorRes: Int): Int {
 		return if (activity?.isFinishing == false)
