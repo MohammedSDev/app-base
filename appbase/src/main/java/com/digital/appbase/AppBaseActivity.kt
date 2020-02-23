@@ -125,8 +125,11 @@ abstract class AppBaseActivity : AppCompatActivity() {
 		}
 	}
 
-	fun startActivity(target: Class<*>, bundle: Bundle, options: Bundle? = null) {
-		startActivity(Intent(this, target).also { it.putExtras(bundle) }, options)
+	fun startActivity(target: Class<*>, bundle: Bundle? = null, options: Bundle? = null) {
+		startActivity(Intent(this, target).also {
+			if (bundle != null)
+				it.putExtras(bundle)
+		}, options)
 	}
 
 	fun startFragment(

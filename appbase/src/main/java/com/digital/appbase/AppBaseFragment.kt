@@ -59,7 +59,7 @@ abstract class AppBaseFragment : Fragment() {
 	/**
 	 * get Bundle
 	 * */
-	var bundle:Bundle
+	var bundle: Bundle
 		get() = if (arguments != null) arguments!! else {
 			arguments = Bundle()
 			arguments!!
@@ -69,8 +69,11 @@ abstract class AppBaseFragment : Fragment() {
 		}
 
 
-	fun startActivity(target:Class<*>,bundle: Bundle,options:Bundle? = null){
-		startActivity(Intent(context,target).also { it.putExtras(bundle) },options)
+	fun startActivity(target: Class<*>, bundle: Bundle? = null, options: Bundle? = null) {
+		startActivity(Intent(context, target).also {
+			if (bundle != null)
+				it.putExtras(bundle)
+		}, options)
 	}
 
 	fun startFragment(
@@ -101,6 +104,7 @@ abstract class AppBaseFragment : Fragment() {
 		else
 			null
 	}
+
 	fun getDimenComp(dimenRes: Int) = resources.getDimension(dimenRes)
 
 	//region LifeCycle
@@ -112,6 +116,6 @@ abstract class AppBaseFragment : Fragment() {
 		return activity != null && activity?.isFinishing == false
 	}
 
-	fun delay(delay:Long,callback: ()->Unit) = Handler().postDelayed(callback,delay)
+	fun delay(delay: Long, callback: () -> Unit) = Handler().postDelayed(callback, delay)
 
 }
