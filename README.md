@@ -29,4 +29,6 @@ dependencies {
 # Document: Soon In Shaa Allah
 
 
-# Enjoy using app-ktx library,report any bugs you found,request any update ,or even drop me an email gg.goo.mobile@gmail.com
+
+
+# Enjoy using app-base library,report any bugs you found,request any update ,or even drop me an email gg.goo.mobile@gmail.com
