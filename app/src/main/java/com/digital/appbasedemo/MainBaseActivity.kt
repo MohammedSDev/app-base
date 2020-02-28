@@ -1,11 +1,10 @@
 package com.digital.appbasedemo
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.digital.appbase.AppActivity
+import com.digital.appbase.AppBaseActivity
 
-class MainActivity : AppActivity() {
+class MainBaseActivity : AppBaseActivity() {
 	override fun getUserLanguage(context: Context?): String {
 		return ""
 	}
