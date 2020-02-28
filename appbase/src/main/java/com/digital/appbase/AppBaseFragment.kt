@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import java.io.Serializable
+import java.lang.IllegalArgumentException
 
 /**
  * Created by Gg on 2/9/2019.
@@ -75,6 +77,25 @@ abstract class AppBaseFragment : Fragment() {
 				it.putExtras(bundle)
 		}, options)
 	}
+
+	fun startActivity(target: Class<*>, options: Bundle? = null, vararg c: Pair<String, Any>? ) {
+		val bundle = Bundle()
+		c.forEach {
+			when(val second = it?.second){
+				is Int -> bundle.putInt(it.first,second)
+				is String -> bundle.putString(it.first,second)
+				is Float -> bundle.putFloat(it.first,second)
+				is Double -> bundle.putDouble(it.first,second)
+				is Serializable -> bundle.putSerializable(it.first,second)
+				else -> throw IllegalArgumentException("---- error ----- " +
+					"${second?.javaClass} is not handled type.instead use basic startActivity with Intent.")
+			}
+		}
+		startActivity(Intent(context, target).also {
+			it.putExtras(bundle)
+		}, options)
+	}
+
 
 	fun startFragment(
 		containerId: Int,

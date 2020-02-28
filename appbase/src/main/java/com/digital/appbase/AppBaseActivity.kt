@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.digital.appktx.changeAppLocale
 import com.digital.appktx.getCurrentLanguageCode
+import java.io.Serializable
+import java.lang.IllegalArgumentException
 
 
 /**
@@ -128,6 +130,24 @@ abstract class AppBaseActivity : AppCompatActivity() {
 	fun startActivity(target: Class<*>, bundle: Bundle? = null, options: Bundle? = null) {
 		startActivity(Intent(this, target).also {
 			if (bundle != null)
+				it.putExtras(bundle)
+		}, options)
+	}
+
+	fun startActivity(target: Class<*>, options: Bundle? = null, vararg c: Pair<String, Any>?) {
+		val bundle = Bundle()
+		c.forEach {
+			when(val second = it?.second){
+				is Int -> bundle.putInt(it.first,second)
+				is String -> bundle.putString(it.first,second)
+				is Float -> bundle.putFloat(it.first,second)
+				is Double -> bundle.putDouble(it.first,second)
+				is Serializable -> bundle.putSerializable(it.first,second)
+				else -> throw IllegalArgumentException("---- error ----- " +
+					"${second?.javaClass} is not handled type.instead use basic startActivity with Intent.")
+			}
+		}
+		startActivity(Intent(this, target).also {
 				it.putExtras(bundle)
 		}, options)
 	}
