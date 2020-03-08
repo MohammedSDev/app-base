@@ -19,6 +19,7 @@ abstract class AppBaseFragment : Fragment() {
 
 	var fragView: View? = null
 	var isNewViewCreated = false
+	internal var nestedFrag: AppBaseFragment? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -78,17 +79,19 @@ abstract class AppBaseFragment : Fragment() {
 		}, options)
 	}
 
-	fun startActivity(target: Class<*>, options: Bundle? = null, vararg c: Pair<String, Any>? ) {
+	fun startActivity(target: Class<*>, options: Bundle? = null, vararg c: Pair<String, Any>?) {
 		val bundle = Bundle()
 		c.forEach {
-			when(val second = it?.second){
-				is Int -> bundle.putInt(it.first,second)
-				is String -> bundle.putString(it.first,second)
-				is Float -> bundle.putFloat(it.first,second)
-				is Double -> bundle.putDouble(it.first,second)
-				is Serializable -> bundle.putSerializable(it.first,second)
-				else -> throw IllegalArgumentException("---- error ----- " +
-					"${second?.javaClass} is not handled type.instead use basic startActivity with Intent.")
+			when (val second = it?.second) {
+				is Int -> bundle.putInt(it.first, second)
+				is String -> bundle.putString(it.first, second)
+				is Float -> bundle.putFloat(it.first, second)
+				is Double -> bundle.putDouble(it.first, second)
+				is Serializable -> bundle.putSerializable(it.first, second)
+				else -> throw IllegalArgumentException(
+					"---- error ----- " +
+						"${second?.javaClass} is not handled type.instead use basic startActivity with Intent."
+				)
 			}
 		}
 		startActivity(Intent(context, target).also {
@@ -140,16 +143,29 @@ abstract class AppBaseFragment : Fragment() {
 	fun delay(delay: Long, callback: () -> Unit) = Handler().postDelayed(callback, delay)
 
 
+	/**
+	 * enable handling on parent Fragment onBackPressed
+	 * */
+	fun enableNestedOnBackPressed() {
+		(parentFragment as? AppBaseFragment)?.nestedFrag = this
+		enableOnBackPressed()
+	}
 
-	fun enableOnBackPressed(){
+	/**
+	 * enable handling activity onBackPressed
+	 * */
+	fun enableOnBackPressed() {
 		if (activity is AppBaseActivity) {
 			(activity as AppBaseActivity).nestedFrag = this
 		}
 	}
+
 	/**
 	 * handle onBackPressed.
 	 * @return true: if you handle onBackPressed,
 	 * false: to let app handle onBackPressed
 	 * */
-	open fun onBackPressed():Boolean = false
+	open fun onBackPressed(): Boolean {
+		return nestedFrag?.onBackPressed() == true
+	}
 }
