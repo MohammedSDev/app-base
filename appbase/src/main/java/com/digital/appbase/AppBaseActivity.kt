@@ -25,6 +25,7 @@ import java.lang.IllegalArgumentException
  */
 abstract class AppBaseActivity : AppCompatActivity() {
 
+	internal var nestedFrag: AppBaseFragment? = null
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		AppBaseSharedContext.context = application
@@ -137,18 +138,20 @@ abstract class AppBaseActivity : AppCompatActivity() {
 	fun startActivity(target: Class<*>, options: Bundle? = null, vararg c: Pair<String, Any>?) {
 		val bundle = Bundle()
 		c.forEach {
-			when(val second = it?.second){
-				is Int -> bundle.putInt(it.first,second)
-				is String -> bundle.putString(it.first,second)
-				is Float -> bundle.putFloat(it.first,second)
-				is Double -> bundle.putDouble(it.first,second)
-				is Serializable -> bundle.putSerializable(it.first,second)
-				else -> throw IllegalArgumentException("---- error ----- " +
-					"${second?.javaClass} is not handled type.instead use basic startActivity with Intent.")
+			when (val second = it?.second) {
+				is Int -> bundle.putInt(it.first, second)
+				is String -> bundle.putString(it.first, second)
+				is Float -> bundle.putFloat(it.first, second)
+				is Double -> bundle.putDouble(it.first, second)
+				is Serializable -> bundle.putSerializable(it.first, second)
+				else -> throw IllegalArgumentException(
+					"---- error ----- " +
+						"${second?.javaClass} is not handled type.instead use basic startActivity with Intent."
+				)
 			}
 		}
 		startActivity(Intent(this, target).also {
-				it.putExtras(bundle)
+			it.putExtras(bundle)
 		}, options)
 	}
 
@@ -185,6 +188,14 @@ abstract class AppBaseActivity : AppCompatActivity() {
 	}
 
 	fun delay(delay: Long, callback: () -> Unit) = Handler().postDelayed(callback, delay)
+
+
+	override fun onBackPressed() {
+		if (nestedFrag?.onBackPressed() == false) {
+			super.onBackPressed()
+		}
+	}
+
 }
 
 /**

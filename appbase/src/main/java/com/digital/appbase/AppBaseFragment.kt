@@ -139,4 +139,17 @@ abstract class AppBaseFragment : Fragment() {
 
 	fun delay(delay: Long, callback: () -> Unit) = Handler().postDelayed(callback, delay)
 
+
+
+	fun enableOnBackPressed(){
+		if (activity is AppBaseActivity) {
+			(activity as AppBaseActivity).nestedFrag = this
+		}
+	}
+	/**
+	 * handle onBackPressed.
+	 * @return true: if you handle onBackPressed,
+	 * false: to let app handle onBackPressed
+	 * */
+	open fun onBackPressed():Boolean = false
 }
