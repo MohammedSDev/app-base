@@ -191,7 +191,7 @@ abstract class AppBaseActivity : AppCompatActivity() {
 
 
 	override fun onBackPressed() {
-		if (nestedFrag?.onBackPressed() == false) {
+		if (nestedFrag?.onBackPressed() != true) {
 			super.onBackPressed()
 		}
 	}
