@@ -10,7 +10,7 @@ import com.digital.appktx.changeAppLocale
  * */
 abstract class AppAppBase : Application() {
 
-	fun applyLanguageToBaseContext(): Boolean = true
+	open fun applyLanguageToBaseContext(): Boolean = true
 
 	override fun attachBaseContext(base: Context?) {
 		val langCode = getUserLanguage(base)
