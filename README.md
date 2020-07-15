@@ -1,5 +1,5 @@
 # app-base
-![Release](https://jitpack.io/v/clickapps-android/app-base.svg)
+![Release](https://jitpack.io/v/MohammedSDev/app-base.svg)
 <!--
 MohammedSDev
 clickapps-android
@@ -25,7 +25,7 @@ allprojects {
 in app level build.gradle
 ```gradle
 dependencies {
-        implementation 'com.github.clickapps-android:app-base:<last-build>'
+        implementation 'com.github.MohammedSDev:app-base:<last-build>'
 }
 ```
 
