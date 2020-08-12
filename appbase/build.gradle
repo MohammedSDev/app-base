@@ -24,6 +24,11 @@ android {
         }
     }
 
+    configurations {
+        appBaseTestDeps.extendsFrom testImplementation
+        appBaseAndroidTestDeps.extendsFrom androidTestImplementation
+    }
+
 }
 
 dependencies {
@@ -33,28 +38,31 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'com.github.MohammedSDev:app-ktx:1.2.3'
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"//2.1.0
-//    implementation 'androidx.core:core-ktx:1.2.0'
-//    testImplementation 'junit:junit:4.12'
+
+    //required for mock server
+    implementation 'com.squareup.okhttp3:okhttp:3.12.12'//3.14.9
+
     androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.test.espresso:espresso-intents:3.2.0"
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.12'//3.14.9
+//    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+//    androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
     //testing
-    testApi 'junit:junit:4.13'
-    testApi 'androidx.test:core:1.2.0'
-    testApi "androidx.arch.core:core-testing:2.1.0"
-//    testApi "com.google.truth:truth:1.0.1"
-//    testApi "io.mockk:mockk:1.10.0"
-    // AndroidX Test core, ext dependencies & Robolectric testing dependency.
+    testImplementation "junit:junit:4.13"
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation 'androidx.test:core-ktx:1.2.0'
     testImplementation 'androidx.test.ext:junit-ktx:1.1.1'
     testImplementation 'org.robolectric:robolectric:4.2.1'
     //https://stackoverflow.com/questions/7421612/slf4j-failed-to-load-class-org-slf4j-impl-staticloggerbinder
     testImplementation "org.slf4j:slf4j-simple:1.6.1"
-    //http test
+    //okHttp test
     testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"
+    //paging
     testImplementation "androidx.paging:paging-common-ktx:2.1.2"
 
 }
