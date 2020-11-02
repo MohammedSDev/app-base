@@ -2,6 +2,7 @@ package com.digital.appbase
 
 import android.app.Application
 import android.content.Context
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModel
 import com.digital.appktx.changeAppLocale
 
@@ -26,7 +27,7 @@ abstract class AppAppBase : Application() {
 	 * */
 	abstract fun getUserLanguage(context: Context?): String
 
-
+	@CallSuper
 	override fun onCreate() {
 		super.onCreate()
 		AppBaseSharedContext.context = this
@@ -38,5 +39,5 @@ abstract class AppAppBase : Application() {
 	return YourViewModel(application, Repository())
 	}
 	 * */
-	abstract fun <T : ViewModel?> createVM(modelClass: Class<T>): ViewModel
+	open fun <T : ViewModel?> createVM(modelClass: Class<T>): ViewModel = EmptyVM(this)
 }

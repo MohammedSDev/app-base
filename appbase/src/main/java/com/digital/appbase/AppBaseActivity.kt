@@ -9,6 +9,8 @@ import android.os.Handler
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.BaseContextWrappingDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.digital.appktx.changeAppLocale
@@ -24,7 +26,7 @@ import java.lang.IllegalArgumentException
  * instead use it as parent of your base activity class.
  */
 abstract class AppBaseActivity : AppCompatActivity() {
-
+	private var wrapperDelegate: BaseContextWrappingDelegate? = null
 	internal var nestedFrag: AppBaseFragment? = null
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -182,10 +184,21 @@ abstract class AppBaseActivity : AppCompatActivity() {
 	 * */
 	abstract fun getUserLanguage(context: Context?): String
 
-	override fun attachBaseContext(newBase: Context?) {
-		val langCode = getUserLanguage(newBase)
-		super.attachBaseContext(changeAppLocale(langCode, newBase, {}))
-	}
+	open fun applyLocaleLanguage(): Boolean = true
+
+	override fun getDelegate() =
+		wrapperDelegate ?: BaseContextWrappingDelegate(super.getDelegate(),applyLocaleLanguage()).also {
+			wrapperDelegate = it
+		}
+//	override fun attachBaseContext(newBase: Context?) {
+//		if (applyLocaleLanguage()) {
+//			val langCode = getUserLanguage(newBase)
+//			super.attachBaseContext(changeAppLocale(langCode, newBase, {}))
+//		} else {
+//			super.attachBaseContext(newBase)
+//		}
+//	}
+
 
 	fun delay(delay: Long, callback: () -> Unit) = Handler().postDelayed(callback, delay)
 
