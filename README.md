@@ -7,7 +7,7 @@ clickapps-android
 
 
 
-App-base is base classes of android projects,with clean code. e.g: Activities,Fragments,ViewModels.
+App-base library is base classes of android projects,with clean code. e.g: Activities,Fragments,ViewModels.
 
 # add dependence
 in project level build.gradle
