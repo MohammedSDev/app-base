@@ -36,11 +36,11 @@ abstract class AppBaseVM(application: Application) : AndroidViewModel(applicatio
 	fun <L> getMutableLiveData(liveData: LiveData<L>): MutableLiveData<L> =
 		liveData as MutableLiveData<L>
 
-	fun getString(@StringRes strRes: Int) = getApplication<Application>().getString(strRes)
+	open fun getString(@StringRes strRes: Int) = getContext().getString(strRes)
 
 	open fun applyLocaleContext() = false
 
-	fun getContext(langCode: String = Locale.getDefault().language): Context {
+	open fun getContext(langCode: String = Locale.getDefault().language): Context {
 		return if (applyLocaleContext()) changeAppLocale(
 			langCode,
 			getApplication(),
